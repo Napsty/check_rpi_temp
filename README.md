@@ -16,3 +16,12 @@ RPI TEMP WARNING: Temperature 41.90 is higher than warning threshold (36.00) |rp
 pi@raspberrypi:~ $ ./check_rpi_temp.py -w 90 -c 105 -u f
 RPI TEMP CRITICAL: Temperature 106.34 is higher than critical threshold (105.00) |rpi_temp=106.34;90.00;105.00;;
 ```
+
+## NRPE example
+```
+# Without command args
+command[check_rpi_temp]=sudo /usr/lib/nagios/plugins/check_rpi_temp.py
+
+# With command args
+command[check_rpi_temp]=sudo /usr/lib/nagios/plugins/check_rpi_temp.py -w $ARG1$ -c $ARG2$
+```
