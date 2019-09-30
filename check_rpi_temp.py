@@ -25,15 +25,15 @@
 #
 # History:
 # 20190930 0.1: Created plugin
+# 20190930 0.2: Catch output problems of vcgencmd command
 ######################################################################
 # version
-version=0.1
+version=0.2
 
 # imports
 import os
 import sys
 import argparse
-import subprocess
 
 # defaults
 unit='c'
@@ -62,7 +62,12 @@ if (args.crit):
 
 # Get temperature
 temp = os.popen("/usr/bin/vcgencmd measure_temp | egrep -o '[0-9]*\.[0-9]*'").read()
-temp = float(temp)
+try:
+    temp = float(temp)
+except:
+    #raise
+    print("RPI TEMP UNKNOWN: Unable to read output of '/usr/bin/vcgencmd measure_temp'. Try different user or use sudo?")
+    sys.exit(3)
 
 if (unit == 'f'):
     temp = (temp*9/5)+32
