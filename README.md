@@ -2,9 +2,11 @@
 Monitoring plugin to measure and check board temperature of a Raspberry Pi
 
 ## Parameters
+```
 -u / --unit  Show temperature in Celsius (c) or Fahrenheit (f), defaults to c
 -w / --warn  Define warning threshold
 -c / --crit  Define critical threshold
+```
 
 ## Usage
 ```
