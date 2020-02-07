@@ -22,6 +22,7 @@
 # 02110-1301, USA.
 #
 # Copyright (c) 2019 Claudio Kuenzler www.claudiokuenzler.com
+# Copyright (c) 2020 Tobias Bossert
 #
 # History:
 # 20190930 0.1: Created plugin
