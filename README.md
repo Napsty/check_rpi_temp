@@ -20,8 +20,8 @@ RPI TEMP CRITICAL: Temperature 106.34 is higher than critical threshold (105.00)
 ## NRPE example
 ```
 # Without command args
-command[check_rpi_temp]=sudo /usr/lib/nagios/plugins/check_rpi_temp.py
+command[check_rpi_temp]=/usr/lib/nagios/plugins/check_rpi_temp.py
 
 # With command args
-command[check_rpi_temp]=sudo /usr/lib/nagios/plugins/check_rpi_temp.py -w $ARG1$ -c $ARG2$
+command[check_rpi_temp]=/usr/lib/nagios/plugins/check_rpi_temp.py -w $ARG1$ -c $ARG2$
 ```

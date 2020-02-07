@@ -26,9 +26,10 @@
 # History:
 # 20190930 0.1: Created plugin
 # 20190930 0.2: Catch output problems of vcgencmd command
+# 20200207 0.3: Changed how temperature is read, added min/max to perf_data
 ######################################################################
 # version
-version=0.2
+version=0.3
 
 # imports
 import os
@@ -40,6 +41,8 @@ unit='c'
 temp=0
 warn=0
 crit=0
+max_temp=85
+min_temp=0
 
 # Parameters
 usage = "Usage: %prog [-u (c|f)]\n"
@@ -61,19 +64,19 @@ if (args.crit):
 
 
 # Get temperature
-temp = os.popen("/usr/bin/vcgencmd measure_temp | egrep -o '[0-9]*\.[0-9]*'").read()
+temp = os.popen("cat /sys/class/thermal/thermal_zone0/temp").read()
 try:
-    temp = float(temp)
+    temp = float(temp)/1000
 except:
     #raise
-    print("RPI TEMP UNKNOWN: Unable to read output of '/usr/bin/vcgencmd measure_temp'. Try different user or use sudo?")
+    print("RPI TEMP UNKNOWN: Unable to read output of '/sys/class/thermal/thermal_zone0/temp'")
     sys.exit(3)
 
 if (unit == 'f'):
     temp = (temp*9/5)+32
 
 # Prep performance data
-perfdata = "|rpi_temp=%.2f;%.2f;%.2f;;" % (temp, warn, crit)
+perfdata = "|rpi_temp=%.2f;%.2f;%.2f;%.2f;%.2f" % (temp, warn, crit, min_temp, max_temp)
 
 # Check against thresholds
 if (crit > 0 and temp>=crit):
